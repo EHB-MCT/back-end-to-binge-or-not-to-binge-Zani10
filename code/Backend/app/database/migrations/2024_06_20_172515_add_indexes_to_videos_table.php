@@ -12,8 +12,13 @@ return new class extends Migration
     public function up()
     {
         Schema::table('videos', function (Blueprint $table) {
-            $table->index('title');
-            $table->index('description');
+            // Verwijder de duplicaatindex als deze bestaat
+            if (Schema::hasColumn('videos', 'title')) {
+                $table->dropIndex(['title']);
+            }
+
+            // Voeg de index opnieuw toe
+            $table->index('title', 'videos_title_index');
         });
     }
 
@@ -21,8 +26,8 @@ return new class extends Migration
     {
         Schema::table('videos', function (Blueprint $table) {
             $table->dropIndex(['title']);
-            $table->dropIndex(['description']);
         });
     }
+
 
 };

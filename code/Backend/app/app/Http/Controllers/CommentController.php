@@ -12,15 +12,16 @@ class CommentController extends Controller
     {
         $request->validate([
             'video_id' => 'required|exists:videos,id',
-            'comment' => 'required|string',
+            'comment' => 'required|string|max:1000',
         ]);
 
         Comment::create([
-            'user_id' => Auth::id(),
             'video_id' => $request->video_id,
+            'user_id' => auth()->id(),
             'comment' => $request->comment,
         ]);
 
-        return redirect()->back()->with('success', 'Comment submitted successfully.');
+        return back();
     }
+
 }

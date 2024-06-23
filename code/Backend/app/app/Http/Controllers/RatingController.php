@@ -12,15 +12,16 @@ class RatingController extends Controller
     {
         $request->validate([
             'video_id' => 'required|exists:videos,id',
-            'rating' => 'required|integer|between:1,5',
+            'rating' => 'required|integer|min:1|max:5',
         ]);
 
         Rating::updateOrCreate(
-            ['user_id' => Auth::id(), 'video_id' => $request->video_id],
+            ['video_id' => $request->video_id, 'user_id' => auth()->id()],
             ['rating' => $request->rating]
         );
 
-        return redirect()->back()->with('success', 'Rating submitted successfully.');
+        return back();
     }
+
 }
 

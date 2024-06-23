@@ -25,5 +25,9 @@ class Video extends Model
         return $this->hasMany(Material::class);
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
 

@@ -10,21 +10,6 @@ class Video extends Model
 
     protected $fillable = ['title', 'description', 'url', 'steps', 'category_id', 'user_id'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function materials()
-    {
-        return $this->hasMany(Material::class);
-    }
-
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -34,5 +19,11 @@ class Video extends Model
     {
         return $this->hasMany(Rating::class);
     }
+
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
+    }
+
 }
 

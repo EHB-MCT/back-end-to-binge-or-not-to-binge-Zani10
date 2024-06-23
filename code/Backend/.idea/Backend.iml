@@ -40,7 +40,6 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/league/flysystem-local" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/league/mime-type-detection" />
-      <excludeFolder url="file://$MODULE_DIR$/app/vendor/livewire/livewire" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/livewire/volt" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/mockery/mockery" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/monolog/monolog" />

@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 });
 
-// Add the dashboard route
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');

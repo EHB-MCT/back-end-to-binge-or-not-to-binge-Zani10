@@ -2,45 +2,84 @@
 
 @section('content')
     <div class="container">
-        <h1>{{ $video->title }}</h1>
-        <p>{{ $video->description }}</p>
-        <iframe width="560" height="315" src="{{ $video->url }}" frameborder="0" allowfullscreen></iframe>
-
-        <h2>Materials</h2>
-        <ul>
-            @foreach($video->materials as $material)
-                <li>{{ $material->name }}: {{ $material->quantity }}</li>
-            @endforeach
-        </ul>
-
-        <h2>Steps</h2>
-        <p>Describe the steps here...</p>
-
-        <h2>Comments</h2>
-        <form action="{{ route('comments.store') }}" method="POST">
-            @csrf
-            <input type="hidden" name="video_id" value="{{ $video->id }}">
-            <div>
-                <textarea name="comment" required></textarea>
+        <div class="row">
+            <!-- Video en beschrijving aan de linkerkant -->
+            <div class="col-md-8">
+                <h1>{{ $video->title }}</h1>
+                <p>{{ $video->description }}</p>
+                <div class="embed-responsive embed-responsive-16by9 mb-4">
+                    <iframe class="embed-responsive-item" src="{{ $video->url }}" allowfullscreen></iframe>
+                </div>
+                <!-- Rating systeem -->
+                <div class="rating">
+                    <h4>Rate this video:</h4>
+                    <form action="{{ route('videos.rate', $video->id) }}" method="POST">
+                        @csrf
+                        <fieldset class="rating">
+                            <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
+                            <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+                            <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
+                            <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                            <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+                        </fieldset>
+                        <button type="submit" class="btn btn-primary mt-3">Submit Rating</button>
+                    </form>
+                </div>
             </div>
-            <button type="submit">Submit Comment</button>
-        </form>
-
-        <ul>
-            @foreach($video->comments as $comment)
-                <li>{{ $comment->comment }} - <strong>{{ $comment->user->name }}</strong></li>
-            @endforeach
-        </ul>
-
-        <h2>Rate this Video</h2>
-        <form action="{{ route('ratings.store') }}" method="POST">
-            @csrf
-            <input type="hidden" name="video_id" value="{{ $video->id }}">
-            <div>
-                <label for="rating">Rating (1-5)</label>
-                <input type="number" name="rating" id="rating" min="1" max="5" required>
+            <!-- Materialen en stappen aan de rechterkant -->
+            <div class="col-md-4">
+                <h4>Materials</h4>
+                <ul>
+                    @foreach ($video->materials as $material)
+                        <li>{{ $material->name }}: {{ $material->quantity }}</li>
+                    @endforeach
+                </ul>
+                <h4>Steps</h4>
+                <p>{{ $video->steps }}</p>
             </div>
-            <button type="submit">Submit Rating</button>
-        </form>
+        </div>
     </div>
 @endsection
+
+<!-- CSS voor het ratingsysteem -->
+<style>
+    .rating {
+        border: none;
+        float: left;
+    }
+
+    .rating > input {
+        display: none;
+    }
+
+    .rating > label:before {
+        margin: 5px;
+        font-size: 1.25em;
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f005";
+    }
+
+    .rating > .half:before {
+        content: "\f089";
+        position: absolute;
+    }
+
+    .rating > label {
+        color: #ddd;
+        float: right;
+    }
+
+    .rating > input:checked ~ label,
+    .rating:not(:checked) > label:hover,
+    .rating:not(:checked) > label:hover ~ label {
+        color: #FFD700;
+    }
+
+    .rating > input:checked + label:hover,
+    .rating > input:checked ~ label:hover,
+    .rating > label:hover ~ input:checked ~ label,
+    .rating > input:checked ~ label:hover ~ label {
+        color: #FFED85;
+    }
+</style>

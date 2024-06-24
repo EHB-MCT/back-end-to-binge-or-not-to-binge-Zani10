@@ -24,6 +24,8 @@ Route::get('/', [VideoController::class, 'index'])->name('home');
 Route::resource('videos', VideoController::class)->only(['index', 'show']);
 Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
 Route::post('ratings', [RatingController::class, 'store'])->name('ratings.store');
+Route::post('/videos/{video}/rate', [VideoController::class, 'rate'])->name('videos.rate');
+
 
 Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');

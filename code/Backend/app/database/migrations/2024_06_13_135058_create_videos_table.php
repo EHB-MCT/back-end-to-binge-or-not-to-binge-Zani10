@@ -13,16 +13,14 @@ class CreateVideosTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('url');
+            $table->string('thumbnail');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-
     public function down()
     {
         Schema::dropIfExists('videos');
     }
-
 }
-

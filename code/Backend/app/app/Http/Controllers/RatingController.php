@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rating;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Rating;
 
 class RatingController extends Controller
 {
@@ -15,13 +14,13 @@ class RatingController extends Controller
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
-        Rating::updateOrCreate(
-            ['video_id' => $request->video_id, 'user_id' => auth()->id()],
-            ['rating' => $request->rating]
-        );
+        Rating::create([
+            'video_id' => $request->video_id,
+            'rating' => $request->rating,
+        ]);
 
-        return back();
+        return redirect()->route('videos.show', $request->video_id);
     }
-
 }
+
 

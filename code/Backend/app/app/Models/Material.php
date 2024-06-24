@@ -9,9 +9,11 @@ class Material extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['video_id', 'name', 'quantity'];
+
     public function video()
     {
         return $this->belongsTo(Video::class);
     }
-
 }
+

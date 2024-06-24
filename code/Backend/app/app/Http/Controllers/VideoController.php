@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Video;
 use Illuminate\Http\Request;
+use App\Models\Video;
 
 class VideoController extends Controller
 {
     public function index()
     {
-        $videos = Video::with('materials')->get();
+        $videos = Video::all();
         return view('videos.index', compact('videos'));
     }
 
-    public function show(Video $video)
+    public function show($id)
     {
-        $video->load('comments.user', 'ratings', 'materials');
+        $video = Video::findOrFail($id);
         return view('videos.show', compact('video'));
     }
-
 }
+
 
 
 

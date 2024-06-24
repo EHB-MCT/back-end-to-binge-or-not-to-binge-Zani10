@@ -17,7 +17,6 @@ class CommentController extends Controller
 
         Comment::create([
             'video_id' => $request->video_id,
-            'user_id' => auth()->id(),
             'comment' => $request->comment,
         ]);
 

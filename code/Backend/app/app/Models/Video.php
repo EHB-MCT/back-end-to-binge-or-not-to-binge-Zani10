@@ -8,21 +8,16 @@ class Video extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'url', 'steps', 'category_id', 'user_id'];
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-    public function ratings()
-    {
-        return $this->hasMany(Rating::class);
-    }
+    protected $fillable = ['title', 'description', 'url', 'category_id'];
 
     public function materials()
     {
         return $this->hasMany(Material::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function category()
@@ -30,4 +25,5 @@ class Video extends Model
         return $this->belongsTo(Category::class);
     }
 }
+
 

@@ -12,22 +12,22 @@ return new class extends Migration
     public function up()
     {
         Schema::table('videos', function (Blueprint $table) {
-            // Verwijder de duplicaatindex als deze bestaat
-            if (Schema::hasColumn('videos', 'title')) {
-                $table->dropIndex(['title']);
+            if (!Schema::hasColumn('videos', 'title')) {
+                $table->index('title', 'videos_title_index');
             }
-
-            // Voeg de index opnieuw toe
-            $table->index('title', 'videos_title_index');
         });
     }
 
     public function down()
     {
         Schema::table('videos', function (Blueprint $table) {
-            $table->dropIndex(['title']);
+            if (Schema::hasIndex('videos', 'videos_title_index')) {
+                $table->dropIndex(['videos_title_index']);
+            }
         });
     }
+
+
 
 
 };

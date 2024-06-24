@@ -6,12 +6,13 @@
         <div class="row">
             @foreach($videos as $video)
                 <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ $video->thumbnail }}" class="card-img-top" alt="{{ $video->title }}">
+                    <div class="card video-card">
+                        <a href="{{ route('videos.show', $video->id) }}">
+                            <img src="{{ $video->thumbnail }}" class="card-img-top" alt="{{ $video->title }}">
+                        </a>
                         <div class="card-body">
                             <h5 class="card-title">{{ $video->title }}</h5>
                             <p class="card-text">{{ $video->description }}</p>
-                            <a href="{{ route('videos.show', $video->id) }}" class="btn btn-primary">Watch Video</a>
                         </div>
                     </div>
                 </div>
@@ -19,3 +20,20 @@
         </div>
     </div>
 @endsection
+
+<!-- CSS voor het hover- en zoom-effect -->
+<style>
+    .video-card {
+        transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .video-card:hover {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: auto;
+    }
+</style>

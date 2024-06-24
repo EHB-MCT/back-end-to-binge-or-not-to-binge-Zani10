@@ -34,6 +34,7 @@
 
     .card-img-top {
         width: 100%;
-        height: auto;
+        height: 195px;
+        object-fit: cover;
     }
 </style>

@@ -8,11 +8,21 @@ use App\Models\Video;
 
 class VideoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $videos = Video::all();
+        $query = Video::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('title', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        $videos = $query->get();
+
         return view('videos.index', compact('videos'));
     }
+
 
     public function show($id)
     {

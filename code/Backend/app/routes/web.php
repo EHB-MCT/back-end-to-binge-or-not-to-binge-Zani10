@@ -19,6 +19,12 @@ Route::get('/dashboard', function () {
 
  Auth::routes();
 
+Route::get('/', [VideoController::class, 'index'])->name('videos.index');
+Route::get('/videos', [VideoController::class, 'index'])->name('videos.index');
+Route::get('/videos/{video}', [VideoController::class, 'show'])->name('videos.show');
+Route::post('/videos/{video}/rate', [VideoController::class, 'rate'])->name('videos.rate');
+
+
 Route::get('/', [VideoController::class, 'index'])->name('home');
 Route::resource('videos', VideoController::class)->only(['index', 'show']);
 Route::post('comments', [CommentController::class, 'store'])->name('comments.store');

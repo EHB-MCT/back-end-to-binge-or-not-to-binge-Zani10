@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rating;
-use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Video;
+use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
@@ -18,11 +18,16 @@ class VideoController extends Controller
                 ->orWhere('description', 'like', "%{$search}%");
         }
 
+        if ($request->has('category_id')) {
+            $categoryId = $request->input('category_id');
+            $query->where('category_id', $categoryId);
+        }
+
         $videos = $query->get();
+        $categories = Category::all();
 
-        return view('videos.index', compact('videos'));
+        return view('videos.index', compact('videos', 'categories'));
     }
-
 
     public function show($id)
     {
@@ -34,16 +39,20 @@ class VideoController extends Controller
     {
         $rating = new Rating();
         $rating->video_id = $video->id;
-        $rating->user_id = auth()->user()->id; // Gebruiker ingelogd moeten zijn om te kunnen beoordelen
+        $rating->user_id = auth()->user()->id;
         $rating->rating = $request->input('rating');
         $rating->save();
 
         return redirect()->route('videos.show', $video->id)->with('success', 'Rating submitted!');
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $videos = Video::where('title', 'like', "%{$search}%")
+            ->orWhere('description', 'like', "%{$search}%")
+            ->get();
+
+        return response()->json($videos);
+    }
 }
-
-
-
-
-

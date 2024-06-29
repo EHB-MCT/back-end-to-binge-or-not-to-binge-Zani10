@@ -4,7 +4,6 @@
 
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RatingController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MaterialController;
@@ -18,11 +17,11 @@ Route::get('/dashboard', function () {
 
 Auth::routes();
 
+Route::post('/videos/{video}/like', [VideoController::class, 'like'])->name('videos.like');
+
 Route::get('/videos/search', [VideoController::class, 'search'])->name('videos.search');
 Route::resource('videos', VideoController::class)->only(['index', 'show']);
-Route::post('/videos/{video}/rate', [VideoController::class, 'rate'])->name('videos.rate');
 Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
-Route::post('ratings', [RatingController::class, 'store'])->name('ratings.store');
 
 Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');

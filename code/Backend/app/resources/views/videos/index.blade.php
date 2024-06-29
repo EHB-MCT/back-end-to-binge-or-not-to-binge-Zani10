@@ -6,7 +6,7 @@
 
         <!-- Zoekbalk en Categorieën -->
         <form action="{{ route('videos.index') }}" method="GET" class="mb-4">
-            <div class="input-group">
+            <div class="input-group" style="max-width: 400px; margin: 0 auto;">
                 <input type="text" name="search" id="search" class="form-control" placeholder="Search for videos..." value="{{ request()->query('search') }}">
                 <select name="category_id" class="form-control">
                     <option value="">All Categories</option>

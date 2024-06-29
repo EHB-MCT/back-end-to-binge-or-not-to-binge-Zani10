@@ -5,15 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rating extends Model
+class Like extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'video_id',
-        'user_id',
-        'rating',
-    ];
+    protected $fillable = ['video_id', 'user_id', 'like'];
 
     public function video()
     {
@@ -25,3 +21,4 @@ class Rating extends Model
         return $this->belongsTo(User::class);
     }
 }
+

@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Rating;
+use App\Models\Video;
+use Illuminate\Http\Request;
 
 class RatingController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, Video $video)
     {
-        $request->validate([
-            'video_id' => 'required|exists:videos,id',
-            'rating' => 'required|integer|min:1|max:5',
-        ]);
+        $rating = Rating::updateOrCreate(
+            [
+                'video_id' => $video->id,
+                'user_id' => auth()->id(),
+            ],
+            [
+                'rating' => $request->input('rating'),
+            ]
+        );
 
-        Rating::create([
-            'video_id' => $request->video_id,
-            'rating' => $request->rating,
-        ]);
-
-        return redirect()->route('videos.show', $request->video_id);
+        return redirect()->route('videos.show', $video->id)->with('success', 'Rating submitted!');
     }
 }
-
-

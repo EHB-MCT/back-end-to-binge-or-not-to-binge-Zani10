@@ -10,17 +10,17 @@ class VideoController extends Controller
 {
     public function index(Request $request)
     {
+
         $query = Video::query();
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where('title', 'like', "%{$search}%")
                 ->orWhere('description', 'like', "%{$search}%");
         }
 
-        if ($request->has('category_id')) {
-            $categoryId = $request->input('category_id');
-            $query->where('category_id', $categoryId);
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->input('category_id'));
         }
 
         $videos = $query->get();

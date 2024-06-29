@@ -20,6 +20,7 @@
             </div>
         </form>
 
+
         <div class="row" id="video-list">
             @foreach($videos as $video)
                 <div class="col-md-4 mb-4">

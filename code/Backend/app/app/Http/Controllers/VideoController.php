@@ -60,8 +60,9 @@ class VideoController extends Controller
         $video = Video::findOrFail($id);
         $likes = Like::where('video_id', $id)->where('like', true)->count();
         $dislikes = Like::where('video_id', $id)->where('like', false)->count();
+        $userLike = auth()->check() ? Like::where('video_id', $id)->where('user_id', auth()->id())->value('like') : null;
 
-        return view('videos.show', compact('video', 'likes', 'dislikes'));
+        return view('videos.show', compact('video', 'userLike', 'likes', 'dislikes'));
     }
 
 

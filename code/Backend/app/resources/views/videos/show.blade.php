@@ -15,12 +15,16 @@
                     <form action="{{ route('videos.like', $video->id) }}" method="POST" style="display:inline;">
                         @csrf
                         <input type="hidden" name="like" value="1">
-                        <button type="submit" class="btn btn-success">Like {{ $likes }}</button>
+                        <button type="submit" class="btn btn-success {{ $userLike === 1 ? 'active' : '' }}">
+                            <i class="fas fa-thumbs-up"></i> ({{ $likes }})
+                        </button>
                     </form>
                     <form action="{{ route('videos.like', $video->id) }}" method="POST" style="display:inline;">
                         @csrf
                         <input type="hidden" name="like" value="0">
-                        <button type="submit" class="btn btn-danger">Dislike {{ $dislikes }}</button>
+                        <button type="submit" class="btn btn-danger {{ $userLike === 0 ? 'active' : '' }}">
+                            <i class="fas fa-thumbs-down"></i> ({{ $dislikes }})
+                        </button>
                     </form>
                 </div>
             </div>
@@ -42,35 +46,21 @@
 
 <!-- CSS for rating system -->
 <style>
-    .rating {
-        border: none;
-        float: left;
+
+    .btn {
+        margin-right: 5px;
     }
-    .rating > input {
-        display: none;
+
+    .btn.active {
+        background-color: #28a745;
+        color: white;
+        border-color: #28a745;
     }
-    .rating > label:before {
-        margin: 5px;
-        font-size: 2em;
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        display: inline-block;
-        content: "\f005";
-    }
-    .rating > label {
-        color: #ddd;
-        float: right;
-    }
-    .rating > input:checked ~ label,
-    .rating:not(:checked) > label:hover,
-    .rating:not(:checked) > label:hover ~ label {
-        color: #FFD700;
-    }
-    .rating > input:checked + label:hover,
-    .rating > input:checked ~ label:hover,
-    .rating > label:hover ~ input:checked ~ label,
-    .rating > input:checked ~ label:hover ~ label {
-        color: #FFED85;
+
+    .btn-danger.active {
+        background-color: #dc3545;
+        color: white;
+        border-color: #dc3545;
     }
 </style>
 

@@ -33,9 +33,10 @@ class User extends Authenticatable
     public function totalLikes()
     {
         return $this->videos->sum(function($video) {
-            return $video->likes->where('like', true)->count();
+            return $video->likes()->where('is_like', true)->count();
         });
     }
+
 
 
     public function videos()

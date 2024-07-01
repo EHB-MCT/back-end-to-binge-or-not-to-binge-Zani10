@@ -18,7 +18,7 @@
 
             <!-- User's Videos -->
             <div class="col-md-8">
-                <h3>{{ $user->name }}'s Videos</h3>
+                <h3>Posted Videos</h3>
                 <div class="row">
                     @foreach ($user->videos as $video)
                         <div class="col-md-4 mb-4">
@@ -52,7 +52,7 @@
 
     .card-img-top {
         width: 100%;
-        height: 195px;
+        height: 120px;
         object-fit: cover;
     }
 </style>

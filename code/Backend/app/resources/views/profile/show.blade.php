@@ -6,9 +6,8 @@
             <!-- Profile Photo and Bio -->
             <div class="col-md-4 text-center">
                 @if ($user->profile_photo)
-                    <img src="{{ asset('storage/' . $user->profile_photo) }}" alt="Profile Photo" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
-                @else
-                    <img src="https://via.placeholder.com/150" alt="Profile Photo" class="rounded-circle img-fluid">
+                    <img src="{{  $user->profile_photo }}" alt="Profile Photo" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+
                 @endif
                 <h2 class="mt-3">{{ $user->name }}</h2>
                 <p>{{ $user->bio }}</p>
@@ -52,7 +51,7 @@
 
     .card-img-top {
         width: 100%;
-        height: 120px;
+        height: 125px;
         object-fit: cover;
     }
 </style>

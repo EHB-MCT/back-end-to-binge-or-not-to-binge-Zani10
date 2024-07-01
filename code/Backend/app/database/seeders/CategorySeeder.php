@@ -9,8 +9,10 @@ class CategorySeeder extends Seeder
 {
     public function run()
     {
-        Category::create(['name' => 'Woodworking']);
-        Category::create(['name' => 'Painting']);
-        Category::create(['name' => 'Gardening']);
+        $categories = ['Woodworking', 'Painting', 'Gardening'];
+
+        foreach ($categories as $category) {
+            Category::firstOrCreate(['name' => $category]);
+        }
     }
 }

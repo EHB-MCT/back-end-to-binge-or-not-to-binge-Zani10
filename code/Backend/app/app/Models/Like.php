@@ -9,7 +9,11 @@ class Like extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['video_id', 'user_id', 'like'];
+    protected $fillable = [
+        'video_id',
+        'user_id',
+        'is_like',
+    ];
 
     public function video()
     {
@@ -21,4 +25,3 @@ class Like extends Model
         return $this->belongsTo(User::class);
     }
 }
-

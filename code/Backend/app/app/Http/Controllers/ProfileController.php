@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return view('profile.show', compact('user'));
+    }
     public function edit()
     {
         return view('profile.edit', [

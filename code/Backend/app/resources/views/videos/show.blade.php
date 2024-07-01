@@ -3,32 +3,26 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <!-- Video and description -->
             <div class="col-md-8">
                 <h1>{{ $video->title }}</h1>
-                <p>{{ $video->description }}</p>
+                <p>By <a href="{{ route('profile.show', $video->user) }}">{{ $video->user->name }}</a></p>
                 <div class="embed-responsive embed-responsive-16by9 mb-4">
                     <iframe class="embed-responsive-item" src="{{ $video->url }}" allowfullscreen></iframe>
                 </div>
-                <!-- Like/Dislike system -->
+
                 <div class="like-dislike">
-                    <form action="{{ route('videos.like', $video->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('videos.like', $video->id) }}" method="POST">
                         @csrf
-                        <input type="hidden" name="like" value="1">
-                        <button type="submit" class="btn btn-success {{ $userLike === 1 ? 'active' : '' }}">
-                            <i class="fas fa-thumbs-up"></i> ({{ $likes }})
+                        <button type="submit" name="is_like" value="1" class="btn btn-outline-success">
+                            <i class="fas fa-thumbs-up"></i> {{ $video->likes()->where('is_like', 1)->count() }}
                         </button>
-                    </form>
-                    <form action="{{ route('videos.like', $video->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        <input type="hidden" name="like" value="0">
-                        <button type="submit" class="btn btn-danger {{ $userLike === 0 ? 'active' : '' }}">
-                            <i class="fas fa-thumbs-down"></i> ({{ $dislikes }})
+                        <button type="submit" name="is_like" value="0" class="btn btn-outline-danger">
+                            <i class="fas fa-thumbs-down"></i> {{ $video->likes()->where('is_like', 0)->count() }}
                         </button>
                     </form>
                 </div>
             </div>
-            <!-- Materials and steps -->
+
             <div class="col-md-4">
                 <h4>Materials</h4>
                 <ul>
@@ -42,6 +36,7 @@
         </div>
     </div>
 @endsection
+
 
 
 <!-- CSS for rating system -->

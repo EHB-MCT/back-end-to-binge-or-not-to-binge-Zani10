@@ -17,12 +17,15 @@ Route::get('/dashboard', function () {
 
 Auth::routes();
 
+
+
 Route::post('/videos/{video}/like', [VideoController::class, 'like'])->name('videos.like');
 
 Route::get('/videos/search', [VideoController::class, 'search'])->name('videos.search');
 Route::resource('videos', VideoController::class)->only(['index', 'show']);
 Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
 
+Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 

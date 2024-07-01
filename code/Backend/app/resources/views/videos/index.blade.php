@@ -4,24 +4,25 @@
     <div class="container">
         <h1>DIY Videos</h1>
 
-        <!-- Zoekbalk en Categorieën -->
+        <!-- Zoekbalk -->
         <form action="{{ route('videos.index') }}" method="GET" class="mb-4">
-            <div class="input-group" style="max-width: 400px; margin: 0 auto;">
-                <input type="text" name="search" id="search" class="form-control" placeholder="Search for videos..." value="{{ request()->query('search') }}">
-                <select name="category_id" class="form-control">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Search for videos..." value="{{ request()->query('search') }}">
+                <select name="category_id" class="form-control ml-2">
                     <option value="">All Categories</option>
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ request()->query('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                        <option value="{{ $category->id }}" {{ request()->query('category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
                     @endforeach
                 </select>
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                    <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </div>
         </form>
 
-
-        <div class="row" id="video-list">
+        <div class="row">
             @foreach($videos as $video)
                 <div class="col-md-4 mb-4">
                     <div class="card video-card">
@@ -39,7 +40,6 @@
     </div>
 @endsection
 
-<!-- CSS voor het hover- en zoom-effect -->
 <style>
     .video-card {
         transition: transform 0.2s, opacity 0.2s;
@@ -54,11 +54,5 @@
         width: 100%;
         height: 195px;
         object-fit: cover;
-    }
-
-    .search-input {
-        border-radius: 20px;
-        max-width: 400px;
-        margin: 0 auto;
     }
 </style>

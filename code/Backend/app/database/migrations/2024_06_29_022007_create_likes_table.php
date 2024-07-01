@@ -17,7 +17,7 @@ class CreateLikesTable extends Migration
             $table->id();
             $table->foreignId('video_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->boolean('like');
+            $table->boolean('is_like');
             $table->timestamps();
         });
     }
@@ -32,4 +32,3 @@ class CreateLikesTable extends Migration
         Schema::dropIfExists('likes');
     }
 }
-

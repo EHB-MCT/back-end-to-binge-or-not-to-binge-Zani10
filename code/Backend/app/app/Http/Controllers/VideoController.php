@@ -14,9 +14,8 @@ class VideoController extends Controller
         $query = Video::query();
 
         if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->where('title', 'like', "%{$search}%")
-                ->orWhere('description', 'like', "%{$search}%");
+            $query->where('title', 'like', '%' . $request->input('search') . '%')
+                ->orWhere('description', 'like', '%' . $request->input('search') . '%');
         }
 
         if ($request->filled('category_id')) {
@@ -29,41 +28,33 @@ class VideoController extends Controller
         return view('videos.index', compact('videos', 'categories'));
     }
 
-    public function like(Request $request, $id)
+    public function show(Video $video)
     {
-        $video = Video::findOrFail($id);
+        $likes = $video->likes()->where('is_like', true)->count();
+        $dislikes = $video->likes()->where('is_like', false)->count();
+        $userLike = auth()->check() ? $video->likes()->where('user_id', auth()->id())->value('is_like') : null;
 
-        // Check if the user has already liked/disliked the video
+        return view('videos.show', compact('video', 'userLike', 'likes', 'dislikes'));
+    }
+
+    public function like(Request $request, Video $video)
+    {
         $existingLike = Like::where('video_id', $video->id)
             ->where('user_id', auth()->id())
             ->first();
 
         if ($existingLike) {
-            // Update the existing like/dislike
             $existingLike->update([
-                'like' => $request->input('like')
+                'is_like' => $request->input('is_like')
             ]);
         } else {
-            // Create a new like/dislike
             Like::create([
                 'video_id' => $video->id,
                 'user_id' => auth()->id(),
-                'like' => $request->input('like')
+                'is_like' => $request->input('is_like')
             ]);
         }
 
         return redirect()->route('videos.show', $video->id)->with('success', 'Your like/dislike has been recorded.');
     }
-
-    public function show($id)
-    {
-        $video = Video::findOrFail($id);
-        $likes = Like::where('video_id', $id)->where('like', true)->count();
-        $dislikes = Like::where('video_id', $id)->where('like', false)->count();
-        $userLike = auth()->check() ? Like::where('video_id', $id)->where('user_id', auth()->id())->value('like') : null;
-
-        return view('videos.show', compact('video', 'userLike', 'likes', 'dislikes'));
-    }
-
-
 }

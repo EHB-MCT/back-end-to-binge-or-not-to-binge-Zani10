@@ -30,6 +30,14 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function totalLikes()
+    {
+        return $this->videos->sum(function($video) {
+            return $video->likes->where('like', true)->count();
+        });
+    }
+
+
     public function videos()
     {
         return $this->hasMany(Video::class);

@@ -4,12 +4,12 @@
     <div class="container">
         <h1>DIY Videos</h1>
 
-        <!-- Zoekbalk -->
+        <!-- Search bar and category filter -->
         <form action="{{ route('videos.index') }}" method="GET" class="mb-4">
             <div class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="Search for videos..." value="{{ request()->query('search') }}">
                 <select name="category_id" class="form-control ml-2">
-                    <option value="">All Categories</option>
+                    <option value="">Select Category</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ request()->query('category_id') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
@@ -17,7 +17,7 @@
                     @endforeach
                 </select>
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">Search</button>
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </div>
         </form>
@@ -31,7 +31,10 @@
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">{{ $video->title }}</h5>
-                            <p class="card-text">{{ $video->description }}</p>
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="{{ $video->user->profile_photo }}" alt="{{ $video->user->name }}" class="rounded-circle mr-2" width="30" height="30">
+                                <span>{{ $video->user->name }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,6 +43,7 @@
     </div>
 @endsection
 
+<!-- CSS for card and image styles -->
 <style>
     .video-card {
         transition: transform 0.2s, opacity 0.2s;
@@ -54,5 +58,9 @@
         width: 100%;
         height: 195px;
         object-fit: cover;
+    }
+
+    .rounded-circle {
+        border-radius: 50%;
     }
 </style>

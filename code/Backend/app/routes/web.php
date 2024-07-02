@@ -18,21 +18,22 @@ Route::get('/home', function () {
 
 Auth::routes();
 
+Route::middleware('auth')->group(function () {
+    Route::post('/videos/{video}/like', [VideoController::class, 'like'])->name('videos.like');
+
+    Route::get('/videos/search', [VideoController::class, 'search'])->name('videos.search');
+    Route::resource('videos', VideoController::class)->only(['index', 'show']);
+    Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
 
 
-Route::post('/videos/{video}/like', [VideoController::class, 'like'])->name('videos.like');
+    Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('profile/edit/{user}', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile/update/{user}', [ProfileController::class, 'update'])->name('profile.update');
 
-Route::get('/videos/search', [VideoController::class, 'search'])->name('videos.search');
-Route::resource('videos', VideoController::class)->only(['index', 'show']);
-Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
-
-Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
-Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
-
-Route::resource('categories', CategoryController::class);
-Route::get('materials/create/{video}', [MaterialController::class, 'create'])->name('materials.create');
-Route::post('materials/store/{video}', [MaterialController::class, 'store'])->name('materials.store');
-Route::get('materials/edit/{video}/{material}', [MaterialController::class, 'edit'])->name('materials.edit');
-Route::put('materials/update/{video}/{material}', [MaterialController::class, 'update'])->name('materials.update');
-Route::delete('materials/destroy/{video}/{material}', [MaterialController::class, 'destroy'])->name('materials.destroy');
+    Route::resource('categories', CategoryController::class);
+    Route::get('materials/create/{video}', [MaterialController::class, 'create'])->name('materials.create');
+    Route::post('materials/store/{video}', [MaterialController::class, 'store'])->name('materials.store');
+    Route::get('materials/edit/{video}/{material}', [MaterialController::class, 'edit'])->name('materials.edit');
+    Route::put('materials/update/{video}/{material}', [MaterialController::class, 'update'])->name('materials.update');
+    Route::delete('materials/destroy/{video}/{material}', [MaterialController::class, 'destroy'])->name('materials.destroy');
+});

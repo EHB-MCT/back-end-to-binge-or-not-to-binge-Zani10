@@ -42,7 +42,7 @@ class ProfileController extends Controller
         $user->bio = $request->bio;
         $user->save();
 
-        return redirect()->route('profile.show', $user->id)->with('success', 'Profile updated successfully.');
+        return redirect()->route('profile.show', $user->id)->with('success', 'Profile updated');
     }
 }
 

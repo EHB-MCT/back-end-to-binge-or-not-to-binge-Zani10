@@ -18,12 +18,16 @@ Route::get('/home', function () {
 
 Auth::routes();
 
-Route::middleware('auth')->group(function () {
+
+
+
+Route::middleware('auth')->group(function ()
+    {Route::post('videos/{video}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/videos/{video}/like', [VideoController::class, 'like'])->name('videos.like');
 
     Route::get('/videos/search', [VideoController::class, 'search'])->name('videos.search');
     Route::resource('videos', VideoController::class)->only(['index', 'show']);
-    Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
+
 
 
     Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');

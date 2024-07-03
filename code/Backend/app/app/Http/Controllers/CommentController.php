@@ -3,24 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, Video $video)
     {
         $request->validate([
-            'video_id' => 'required|exists:videos,id',
-            'comment' => 'required|string|max:1000',
+            'comment' => 'required|string',
         ]);
 
         Comment::create([
-            'video_id' => $request->video_id,
+            'video_id' => $video->id,
+            'user_id' => Auth::id(),
             'comment' => $request->comment,
         ]);
 
-        return back();
+        return back()->with('success', 'Comment added!');
     }
-
 }

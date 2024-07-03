@@ -10,8 +10,9 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->text('comment');
             $table->foreignId('video_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->text('comment');
             $table->timestamps();
         });
     }
@@ -20,6 +21,6 @@ class CreateCommentsTable extends Migration
     {
         Schema::dropIfExists('comments');
     }
-
-
 }
+
+

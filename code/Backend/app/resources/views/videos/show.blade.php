@@ -1,3 +1,5 @@
+// resources/views/videos/show.blade.php
+
 @extends('layouts.app')
 
 @section('content')
@@ -5,24 +7,40 @@
         <div class="row">
             <div class="col-md-8">
                 <h1>{{ $video->title }}</h1>
-                <p>By <a href="{{ route('profile.show', $video->user) }}">{{ $video->user->name }}</a></p>
+                <p>{{ $video->description }}</p>
                 <div class="embed-responsive embed-responsive-16by9 mb-4">
                     <iframe class="embed-responsive-item" src="{{ $video->url }}" allowfullscreen></iframe>
                 </div>
-
-                <div class="like-dislike">
-                    <form action="{{ route('videos.like', $video->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" name="is_like" value="1" class="btn btn-outline-success">
-                            <i class="fas fa-thumbs-up"></i> {{ $video->likes()->where('is_like', 1)->count() }}
-                        </button>
-                        <button type="submit" name="is_like" value="0" class="btn btn-outline-danger">
-                            <i class="fas fa-thumbs-down"></i> {{ $video->likes()->where('is_like', 0)->count() }}
-                        </button>
-                    </form>
-                </div>
+                <!-- Comments Section -->
+                <h4>Comments</h4>
+                <form action="{{ route('comments.store', $video->id) }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="comment">Add a comment:</label>
+                        <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <hr>
+                @foreach($video->comments as $comment)
+                    <div class="comment mb-3">
+                        <div class="d-flex">
+                            <div class="mr-3">
+                                <img src="{{ $comment->user->profile_photo }}" alt="Profile Photo" class="rounded-circle" style="width: 40px; height: 40px;">
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <strong>{{ $comment->user->name }}</strong>
+                                    <small class="text-muted ml-2">{{ $comment->created_at->diffForHumans() }}</small>
+                                </div>
+                                <p class="mb-0">{{ $comment->comment }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                @endforeach
             </div>
-
+            <!-- Materials and Steps Section -->
             <div class="col-md-4">
                 <h4>Materials</h4>
                 <ul>
@@ -39,8 +57,20 @@
 
 
 
+
+
 <!-- CSS for rating system -->
 <style>
+
+    .comment .d-flex {
+        align-items: flex-start;
+    }
+    .comment img {
+        object-fit: cover;
+    }
+    .comment p {
+        margin: 0;
+    }
 
     .btn {
         margin-right: 5px;

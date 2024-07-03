@@ -22,7 +22,11 @@ Auth::routes();
 
 
 Route::middleware('auth')->group(function ()
-    {Route::post('videos/{video}/comments', [CommentController::class, 'store'])->name('comments.store');
+    {
+
+        Route::post('comments/store/{video}', [CommentController::class, 'store'])->name('comments.store');
+
+
     Route::post('/videos/{video}/like', [VideoController::class, 'like'])->name('videos.like');
 
     Route::get('/videos/search', [VideoController::class, 'search'])->name('videos.search');

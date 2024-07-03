@@ -1,5 +1,3 @@
-// resources/views/videos/show.blade.php
-
 @extends('layouts.app')
 
 @section('content')
@@ -12,15 +10,20 @@
                     <iframe class="embed-responsive-item" src="{{ $video->url }}" allowfullscreen></iframe>
                 </div>
                 <!-- Comments Section -->
-                <h4>Comments</h4>
-                <form action="{{ route('comments.store', $video->id) }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="comment">Add a comment:</label>
-                        <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
+                <h4>{{ $video->comments->count() }} comments</h4>
+                <div class="comment-input-section mb-4">
+                    <div class="d-flex align-items-start">
+                        <img src="{{ auth()->user()->profile_photo }}" alt="Profile Photo" class="rounded-circle" style="width: 40px; height: 40px;">
+                        <div class="flex-grow-1 ml-3">
+                            <input type="text" id="comment-input" class="form-control border-0" placeholder="Add a comment..." onfocus="showCommentButtons()">
+                            <hr class="comment-line">
+                            <div id="comment-buttons" class="mt-2">
+                                <button class="btn btn-secondary btn-sm mr-2" onclick="cancelComment()">Cancel</button>
+                                <button id="submit-comment" type="button" class="btn btn-primary">Comment</button>
+                            </div>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                </div>
                 <hr>
                 @foreach($video->comments as $comment)
                     <div class="comment mb-3">
@@ -55,45 +58,82 @@
     </div>
 @endsection
 
-
-
-
-
-<!-- CSS for rating system -->
+<!-- CSS for styling the profile page and comment system -->
 <style>
-
     .comment .d-flex {
         align-items: flex-start;
     }
+
     .comment img {
         object-fit: cover;
     }
+
     .comment p {
         margin: 0;
+    }
+
+    .comment-input-section {
+        border-color: #ffffff;
+    }
+
+    input:focus + .comment-line {
+        border-color: rgba(0, 0, 0, 0.53);
+    }
+
+    .comment-line {
+        border: 1px solid #ccc;
+    }
+
+    .comment-input-section {
+        position: relative;
+    }
+
+    #comment-buttons {
+        display: flex;
+        justify-content: flex-end;
     }
 
     .btn {
         margin-right: 5px;
     }
-
-    .btn.active {
-        background-color: #28a745;
-        color: white;
-        border-color: #28a745;
-    }
-
-    .btn-danger.active {
-        background-color: #dc3545;
-        color: white;
-        border-color: #dc3545;
-    }
 </style>
 
-<!-- JavaScript for submitting rating -->
+<!-- handling the comment input actions -->
 <script>
-    document.querySelectorAll('.rating input').forEach(star => {
-        star.addEventListener('change', function() {
-            document.getElementById('rating-form').submit();
+    document.addEventListener('DOMContentLoaded', function() {
+        function cancelComment() {
+            document.getElementById('comment-input').value = '';
+            document.getElementById('comment-buttons').classList.add('d-none');
+        }
+
+        function showCommentButtons() {
+            document.getElementById('comment-buttons').classList.remove('d-none');
+        }
+
+        document.getElementById('submit-comment').addEventListener('click', function() {
+            let comment = document.getElementById('comment-input').value.trim();
+            if (comment !== '') {
+                let form = document.createElement('form');
+                form.action = "{{ route('comments.store', ['video' => $video->id]) }}";
+                form.method = 'POST';
+
+                let csrfField = document.createElement('input');
+                csrfField.type = 'hidden';
+                csrfField.name = '_token';
+                csrfField.value = "{{ csrf_token() }}";
+                form.appendChild(csrfField);
+
+                let commentField = document.createElement('input');
+                commentField.type = 'hidden';
+                commentField.name = 'comment';
+                commentField.value = comment;
+                form.appendChild(commentField);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
         });
+
+        document.getElementById('comment-input').addEventListener('focus', showCommentButtons);
     });
 </script>

@@ -28,13 +28,21 @@ class VideoController extends Controller
         return view('videos.index', compact('videos', 'categories'));
     }
 
-    public function show(Video $video)
+    public function show(Request $request, Video $video)
     {
-        $likes = $video->likes()->where('is_like', true)->count();
-        $dislikes = $video->likes()->where('is_like', false)->count();
-        $userLike = auth()->check() ? $video->likes()->where('user_id', auth()->id())->value('is_like') : null;
+        $sort = $request->input('sort', 'newest');
 
-        return view('videos.show', compact('video', 'userLike', 'likes', 'dislikes'));
+        $comments = $video->comments();
+
+        if ($sort == 'newest') {
+            $comments = $comments->orderBy('created_at', 'desc');
+        } else {
+            $comments = $comments->orderBy('created_at', 'asc');
+        }
+
+        $comments = $comments->get();
+
+        return view('videos.show', compact('video', 'comments'));
     }
 
     public function like(Request $request, Video $video)

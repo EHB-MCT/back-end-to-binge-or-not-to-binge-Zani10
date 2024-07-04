@@ -23,7 +23,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function ()
     {
-
+        Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
         Route::post('comments/store/{video}', [CommentController::class, 'store'])->name('comments.store');
 
 

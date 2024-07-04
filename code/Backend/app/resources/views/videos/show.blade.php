@@ -10,7 +10,18 @@
                     <iframe class="embed-responsive-item" src="{{ $video->url }}" allowfullscreen></iframe>
                 </div>
                 <!-- Comments Section -->
-                <h4>{{ $video->comments->count() }} comments</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>{{ $comments->count() }} comments</h4>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="sortCommentsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-sort"></i> Sort by
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="sortCommentsDropdown">
+                            <a class="dropdown-item" href="{{ route('videos.show', ['video' => $video->id, 'sort' => 'newest']) }}">Newest first</a>
+                            <a class="dropdown-item" href="{{ route('videos.show', ['video' => $video->id, 'sort' => 'oldest']) }}">Oldest first</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="comment-input-section mb-4">
                     <div class="d-flex align-items-start">
                         <img src="{{ auth()->user()->profile_photo }}" alt="Profile Photo" class="rounded-circle" style="width: 40px; height: 40px;">
@@ -25,7 +36,7 @@
                     </div>
                 </div>
                 <hr>
-                @foreach($video->comments as $comment)
+                @foreach($comments as $comment)
                     <div class="comment mb-3">
                         <div class="d-flex">
                             <div class="mr-3">
@@ -58,20 +69,17 @@
     </div>
 @endsection
 
-<!-- CSS for styling the profile page and comment system -->
+<!-- CSS for styling -->
 <style>
     .comment .d-flex {
         align-items: flex-start;
     }
-
     .comment img {
         object-fit: cover;
     }
-
     .comment p {
         margin: 0;
     }
-
     .comment-input-section {
         border-color: #ffffff;
     }
@@ -80,25 +88,19 @@
         border-color: rgba(0, 0, 0, 0.53);
     }
 
-    .comment-line {
-        border: 1px solid #ccc;
-    }
-
     .comment-input-section {
         position: relative;
     }
-
     #comment-buttons {
         display: flex;
         justify-content: flex-end;
     }
-
     .btn {
         margin-right: 5px;
     }
 </style>
 
-<!-- handling the comment input actions -->
+<!-- JavaScript for handling the comment input actions -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         function cancelComment() {

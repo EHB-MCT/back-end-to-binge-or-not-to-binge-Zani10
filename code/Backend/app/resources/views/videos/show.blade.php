@@ -9,8 +9,29 @@
                 <div class="embed-responsive embed-responsive-16by9 mb-4">
                     <iframe class="embed-responsive-item" src="{{ $video->url }}" allowfullscreen></iframe>
                 </div>
+
+                <!-- Steps Section -->
+                <h4>Steps</h4>
+                <form action="{{ route('progress.update', $video->id) }}" method="POST">
+                    @csrf
+                    <div class="row">
+                        @foreach ($video->steps as $index => $step)
+                            <div class="col-md-4 mb-4">
+                                <div class="step-item card">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <span>{{ $step }}</span>
+                                        <input type="checkbox" name="completed_steps[]" value="{{ $index }}"
+                                            {{ in_array($index, $progress->completed_steps ?? []) ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Progress</button>
+                </form>
+
                 <!-- Comments Section -->
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center mt-4">
                     <h4>{{ $comments->count() }} comments</h4>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="sortCommentsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -54,41 +75,22 @@
                     <hr>
                 @endforeach
             </div>
-            <!-- Materials and Steps Section -->
+            <!-- Materials Section -->
             <div class="col-md-4">
                 <h4>Materials</h4>
-                <div class="materials">
+                <div class="row">
                     @foreach ($video->materials as $material)
-                        <div class="material-item">
-                            <div class="material-image">
-                                @php
-                                    $image = \App\Helpers\ImageHelper::fetchImage($material->name);
-                                @endphp
-                                @if ($image)
-                                    <img src="{{ $image }}" alt="{{ $material->name }}" class="img-thumbnail">
-                                @endif
-                            </div>
-                            <div class="material-info">
-                                <span>{{ $material->name }}</span>
-                                <span>{{ $material->quantity }}</span>
+                        <div class="col-md-6 mb-4">
+                            <div class="card material-card">
+                                <img src="{{ \App\Helpers\ImageHelper::fetchImage($material->name) }}" class="card-img-top material-image" alt="{{ $material->name }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $material->name }}</h5>
+                                    <p class="card-text">{{ $material->quantity }}</p>
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-                <h4>Steps</h4>
-                <form action="{{ route('progress.update', $video->id) }}" method="POST">
-                    @csrf
-                    <ul class="steps">
-                        @foreach ($video->steps as $index => $step)
-                            <li class="step-item">
-                                <span>{{ $step }}</span>
-                                <input type="checkbox" name="completed_steps[]" value="{{ $index }}"
-                                    {{ in_array($index, $progress->completed_steps ?? []) ? 'checked' : '' }}>
-                            </li>
-                        @endforeach
-                    </ul>
-                    <button type="submit" class="btn btn-primary">Save Progress</button>
-                </form>
             </div>
         </div>
     </div>
@@ -96,52 +98,6 @@
 
 <!-- CSS for styling -->
 <style>
-    .materials {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .material-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 10px;
-        width: 100%;
-        max-width: 150px;
-        background-color: #f9f9f9;
-        height: 200px; /* Adjusted height for consistency */
-    }
-    .material-image img {
-        width: 100%;
-        height: 150px; /* Adjusted height for images */
-        object-fit: cover; /* Ensures images are cropped proportionately */
-        border-radius: 5px;
-    }
-    .material-info {
-        margin-top: 10px;
-        text-align: center;
-    }
-    .steps {
-        list-style-type: none;
-        padding: 0;
-    }
-    .step-item {
-        display: flex;
-        align-items: center;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 10px;
-        margin-bottom: 10px;
-        background-color: #f9f9f9;
-    }
-    .step-item span {
-        flex-grow: 1;
-    }
-    .step-item input[type="checkbox"] {
-        margin-left: 10px;
-    }
     .comment .d-flex {
         align-items: flex-start;
     }
@@ -168,6 +124,49 @@
     }
     .btn {
         margin-right: 5px;
+    }
+
+    /* Material card styles */
+    .material-card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .material-card .card-body {
+        text-align: center;
+        flex-grow: 1;
+    }
+
+    .material-image {
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .material-card .card-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem; /* Adjusted spacing */
+    }
+
+    .material-card .card-text {
+        font-size: 0.9rem;
+    }
+
+    /* Steps styling */
+    .step-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        background-color: #f8f9fa;
+    }
+    .step-item input[type="checkbox"] {
+        margin-left: 10px;
     }
 </style>
 

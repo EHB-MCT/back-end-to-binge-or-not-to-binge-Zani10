@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('url');
             $table->string('thumbnail');
-            $table->text('steps');
+            $table->json('steps');
             $table->timestamps();
         });
     }

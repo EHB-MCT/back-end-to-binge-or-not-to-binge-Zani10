@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Like;
 use App\Models\Video;
 use App\Models\Category;
+use App\Models\Progress;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
@@ -42,7 +43,9 @@ class VideoController extends Controller
 
         $comments = $comments->get();
 
-        return view('videos.show', compact('video', 'comments'));
+        $progress = auth()->user() ? Progress::where('user_id', auth()->id())->where('video_id', $video->id)->first() : null;
+
+        return view('videos.show', compact('video', 'comments', 'progress'));
     }
 
     public function like(Request $request, Video $video)
@@ -64,5 +67,22 @@ class VideoController extends Controller
         }
 
         return redirect()->route('videos.show', $video->id)->with('success', 'Your like/dislike has been recorded.');
+    }
+
+    public function updateProgress(Request $request, $id)
+    {
+        $video = Video::findOrFail($id);
+
+        $progress = Progress::updateOrCreate(
+            [
+                'user_id' => auth()->id(),
+                'video_id' => $video->id,
+            ],
+            [
+                'current_step' => $request->input('current_step'),
+            ]
+        );
+
+        return redirect()->route('videos.show', $video->id)->with('success', 'Progress updated!');
     }
 }

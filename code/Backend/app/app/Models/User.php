@@ -30,6 +30,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function progress()
+    {
+        return $this->hasMany(Progress::class);
+    }
+
     public function totalLikes()
     {
         return $this->videos->sum(function($video) {

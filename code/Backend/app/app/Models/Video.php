@@ -19,6 +19,15 @@ class Video extends Model
         'category_id',
     ];
 
+    protected $casts = [
+        'steps' => 'array',
+    ];
+
+    public function progress()
+    {
+        return $this->hasMany(Progress::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

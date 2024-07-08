@@ -2,6 +2,7 @@
 
 // routes/web.php
 
+use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
@@ -21,11 +22,12 @@ Auth::routes();
 
 
 
-Route::middleware('auth')->group(function ()
-    {
-        Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
-        Route::post('comments/store/{video}', [CommentController::class, 'store'])->name('comments.store');
+Route::middleware('auth')->group(function () {
 
+    Route::post('progress/{video}', [ProgressController::class, 'update'])->name('progress.update');
+
+    Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::post('comments/store/{video}', [CommentController::class, 'store'])->name('comments.store');
 
     Route::post('/videos/{video}/like', [VideoController::class, 'like'])->name('videos.like');
 

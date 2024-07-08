@@ -23,7 +23,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Step-by-step guide to building a bookshelf.',
                 'url' => 'https://www.youtube.com/embed/t4kcQtlIcxU',
                 'thumbnail' => 'https://img.youtube.com/vi/t4kcQtlIcxU/hqdefault.jpg',
-                'steps' => '1. Gather materials. 2. Cut wood. 3. Assemble shelves.',
+                'steps' => ['Gather materials', 'Cut wood', 'Assemble shelves'],
                 'category_id' => $woodworking->id,
             ],
             [
@@ -31,7 +31,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Learn the best techniques for painting a room.',
                 'url' => 'https://www.youtube.com/embed/iCIZTXkIweg',
                 'thumbnail' => 'https://img.youtube.com/vi/iCIZTXkIweg/hqdefault.jpg',
-                'steps' => '1. Prepare the room. 2. Apply primer. 3. Paint the walls.',
+                'steps' => ['Prepare the room', 'Apply primer', 'Paint the walls'],
                 'category_id' => $painting->id,
             ],
             [
@@ -39,7 +39,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Create a beautiful garden path with these easy steps.',
                 'url' => 'https://www.youtube.com/embed/6vKq6J-Mxn8',
                 'thumbnail' => 'https://img.youtube.com/vi/6vKq6J-Mxn8/hqdefault.jpg',
-                'steps' => '1. Plan the path. 2. Lay the foundation. 3. Place the stones.',
+                'steps' => ['Plan the path', 'Lay the foundation', 'Place the stones'],
                 'category_id' => $gardening->id,
             ],
             [
@@ -47,7 +47,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Learn how to make floating shelves for your home.',
                 'url' => 'https://www.youtube.com/embed/wki3wMAbtLg',
                 'thumbnail' => 'https://img.youtube.com/vi/wki3wMAbtLg/hqdefault.jpg',
-                'steps' => '1. Cut the wood. 2. Assemble the shelves. 3. Mount on the wall.',
+                'steps' => ['Cut the wood', 'Assemble the shelves', 'Mount on the wall'],
                 'category_id' => $woodworking->id,
             ],
             [
@@ -55,7 +55,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Step-by-step guide to painting a wall mural.',
                 'url' => 'https://www.youtube.com/embed/L4ADLL2gAtU',
                 'thumbnail' => 'https://img.youtube.com/vi/L4ADLL2gAtU/hqdefault.jpg',
-                'steps' => '1. Plan your design. 2. Prepare the wall. 3. Paint the mural.',
+                'steps' => ['Plan your design', 'Prepare the wall', 'Paint the mural'],
                 'category_id' => $painting->id,
             ],
             [
@@ -63,7 +63,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Build your own raised garden bed.',
                 'url' => 'https://www.youtube.com/embed/DMORpDWq-q8',
                 'thumbnail' => 'https://img.youtube.com/vi/DMORpDWq-q8/hqdefault.jpg',
-                'steps' => '1. Choose the location. 2. Build the frame. 3. Fill with soil.',
+                'steps' => ['Choose the location', 'Build the frame', 'Fill with soil'],
                 'category_id' => $gardening->id,
             ],
             [
@@ -71,7 +71,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Step-by-step guide to building a treehouse.',
                 'url' => 'https://www.youtube.com/embed/3K3YHYope9E',
                 'thumbnail' => 'https://img.youtube.com/vi/3K3YHYope9E/hqdefault.jpg',
-                'steps' => '1. Select the tree. 2. Build the platform. 3. Add the walls and roof.',
+                'steps' => ['Select the tree', 'Build the platform', 'Add the walls and roof'],
                 'category_id' => $woodworking->id,
             ],
             [
@@ -79,7 +79,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Learn how to paint furniture for a fresh look.',
                 'url' => 'https://www.youtube.com/embed/9HuTN4S-7wc',
                 'thumbnail' => 'https://img.youtube.com/vi/9HuTN4S-7wc/hqdefault.jpg',
-                'steps' => '1. Sand the furniture. 2. Apply primer. 3. Paint with your chosen color.',
+                'steps' => ['Sand the furniture', 'Apply primer', 'Paint with your chosen color'],
                 'category_id' => $painting->id,
             ],
             [
@@ -87,7 +87,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Create your own compost bin for the garden.',
                 'url' => 'https://www.youtube.com/embed/4t59BrzTpJg',
                 'thumbnail' => 'https://img.youtube.com/vi/4t59BrzTpJg/hqdefault.jpg',
-                'steps' => '1. Choose a container. 2. Add compostable materials. 3. Maintain the compost.',
+                'steps' => ['Choose a container', 'Add compostable materials', 'Maintain the compost'],
                 'category_id' => $gardening->id,
             ],
             [
@@ -95,7 +95,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Build a cozy dog house for your pet.',
                 'url' => 'https://www.youtube.com/embed/b-wM9XWdDFY',
                 'thumbnail' => 'https://img.youtube.com/vi/b-wM9XWdDFY/hqdefault.jpg',
-                'steps' => '1. Plan the design. 2. Cut the wood. 3. Assemble the dog house.',
+                'steps' => ['Plan the design', 'Cut the wood', 'Assemble the dog house'],
                 'category_id' => $woodworking->id,
             ],
             [
@@ -103,7 +103,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Refresh your kitchen by painting the cabinets.',
                 'url' => 'https://www.youtube.com/embed/HeIT8gTwAP8',
                 'thumbnail' => 'https://img.youtube.com/vi/HeIT8gTwAP8/hqdefault.jpg',
-                'steps' => '1. Remove the cabinet doors. 2. Sand and prime. 3. Paint and reattach.',
+                'steps' => ['Remove the cabinet doors', 'Sand and prime', 'Paint and reattach'],
                 'category_id' => $painting->id,
             ],
             [
@@ -111,7 +111,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Create a birdhouse for your garden.',
                 'url' => 'https://www.youtube.com/embed/fSBDCHREseE',
                 'thumbnail' => 'https://img.youtube.com/vi/fSBDCHREseE/hqdefault.jpg',
-                'steps' => '1. Cut the wood pieces. 2. Assemble the birdhouse. 3. Paint and hang it.',
+                'steps' => ['Cut the wood pieces', 'Assemble the birdhouse', 'Paint and hang it'],
                 'category_id' => $woodworking->id,
             ],
             [
@@ -119,7 +119,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Learn how to design and plant a flower bed.',
                 'url' => 'https://www.youtube.com/embed/L-MBV_X5zXA',
                 'thumbnail' => 'https://img.youtube.com/vi/L-MBV_X5zXA/hqdefault.jpg',
-                'steps' => '1. Choose the location. 2. Prepare the soil. 3. Plant the flowers.',
+                'steps' => ['Choose the location', 'Prepare the soil', 'Plant the flowers'],
                 'category_id' => $gardening->id,
             ],
             [
@@ -127,7 +127,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Create beautiful wall designs using stencils.',
                 'url' => 'https://www.youtube.com/embed/X3nyuneMciM',
                 'thumbnail' => 'https://img.youtube.com/vi/X3nyuneMciM/hqdefault.jpg',
-                'steps' => '1. Choose your stencil. 2. Position on the wall. 3. Paint over the stencil.',
+                'steps' => ['Choose your stencil', 'Position on the wall', 'Paint over the stencil'],
                 'category_id' => $painting->id,
             ],
             [
@@ -135,7 +135,7 @@ class VideoSeeder extends Seeder
                 'description' => 'Build a picnic table for outdoor dining.',
                 'url' => 'https://www.youtube.com/embed/HiE6FDS7LAc',
                 'thumbnail' => 'https://img.youtube.com/vi/HiE6FDS7LAc/hqdefault.jpg',
-                'steps' => '1. Cut the wood. 2. Assemble the frame. 3. Attach the tabletop and seats.',
+                'steps' => ['Cut the wood', 'Assemble the frame', 'Attach the tabletop and seats'],
                 'category_id' => $woodworking->id,
             ],
             [
@@ -143,10 +143,9 @@ class VideoSeeder extends Seeder
                 'description' => 'Tips and tricks for painting a ceiling.',
                 'url' => 'https://www.youtube.com/embed/k27EA81kEQY',
                 'thumbnail' => 'https://img.youtube.com/vi/k27EA81kEQY/hqdefault.jpg',
-                'steps' => '1. Prepare the area. 2. Apply primer. 3. Paint the ceiling.',
+                'steps' => ['Prepare the area', 'Apply primer', 'Paint the ceiling'],
                 'category_id' => $painting->id,
             ],
-
         ];
 
         foreach ($videos as $videoData) {

@@ -37,6 +37,15 @@
                         </div>
                     @endforeach
                 </div>
+                <!-- Progress Section -->
+                <h3>Progress</h3>
+                <div class="list-group">
+                    @foreach ($user->progress as $progress)
+                        <a href="{{ route('videos.show', $progress->video->id) }}" class="list-group-item list-group-item-action">
+                            {{ $progress->video->title }} - Step {{ $progress->current_step }} / {{ count($progress->video->steps) }}
+                        </a>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

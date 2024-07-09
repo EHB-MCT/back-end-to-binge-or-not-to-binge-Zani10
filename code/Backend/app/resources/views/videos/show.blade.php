@@ -10,6 +10,16 @@
                     <iframe class="embed-responsive-item" src="{{ $video->url }}" allowfullscreen></iframe>
                 </div>
 
+                <!-- Like/Dislike system -->
+                <div class="like-dislike">
+                    <button id="like-button" class="btn btn-success {{ $userLike === 1 ? 'active' : '' }}">
+                        <i class="fas fa-thumbs-up"></i> <span id="like-count">{{ $likes }}</span>
+                    </button>
+                    <button id="dislike-button" class="btn btn-danger {{ $userLike === 0 ? 'active' : '' }}">
+                        <i class="fas fa-thumbs-down"></i> <span id="dislike-count">{{ $dislikes }}</span>
+                    </button>
+                </div>
+
                 <!-- Steps Section -->
                 <h4>Steps</h4>
                 <div class="steps-container d-flex flex-wrap">
@@ -278,5 +288,35 @@
                     }
                 });
         });
+
+        // Handle Like/Dislike AJAX
+        document.getElementById('like-button').addEventListener('click', function() {
+            toggleLike(true);
+        });
+
+        document.getElementById('dislike-button').addEventListener('click', function() {
+            toggleLike(false);
+        });
+
+        function toggleLike(isLike) {
+            fetch("{{ route('videos.like', $video->id) }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    like: isLike
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('like-count').innerText = data.likes;
+                        document.getElementById('dislike-count').innerText = data.dislikes;
+                        document.getElementById('like-button').classList.toggle('active', isLike);
+                        document.getElementById('dislike-button').classList.toggle('active', !isLike);
+                    }
+                });
+        }
     });
 </script>

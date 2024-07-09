@@ -12,26 +12,24 @@
 
                 <!-- Steps Section -->
                 <h4>Steps</h4>
-                <form action="{{ route('progress.update', $video->id) }}" method="POST">
-                    @csrf
-                    <div class="row">
-                        @foreach ($video->steps as $index => $step)
-                            <div class="col-md-4 mb-4">
-                                <div class="step-item card">
-                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                        <span>{{ $step }}</span>
-                                        <input type="checkbox" name="completed_steps[]" value="{{ $index }}"
-                                            {{ in_array($index, $progress->completed_steps ?? []) ? 'checked' : '' }}>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                <div class="steps-container d-flex flex-wrap">
+                    @foreach ($video->steps as $index => $step)
+                        <div class="step-item {{ in_array($index, json_decode($progress->completed_steps ?? '[]', true)) ? 'completed' : '' }}" data-step="{{ $index }}">
+                            <span>{{ $step }}</span>
+                        </div>
+                    @endforeach
+                </div>
+
+                <!-- Completion Message -->
+                <div id="completion-message" class="mt-4" style="display: none;">
+                    <div class="alert alert-success">
+                        You have completed all the steps for this tutorial!
+                        <button id="reset-progress" class="btn btn-warning">Reset Progress</button>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save Progress</button>
-                </form>
+                </div>
 
                 <!-- Comments Section -->
-                <div class="d-flex justify-content-between align-items-center mt-4">
+                <div class="d-flex justify-content-between align-items-center mt-5">
                     <h4>{{ $comments->count() }} comments</h4>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="sortCommentsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -155,6 +153,11 @@
     }
 
     /* Steps styling */
+    .steps-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
     .step-item {
         display: flex;
         justify-content: space-between;
@@ -162,15 +165,17 @@
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 5px;
-        margin-bottom: 10px;
         background-color: #f8f9fa;
+        cursor: pointer;
+        flex: 1 1 calc(33% - 10px); /* Three items per row */
     }
-    .step-item input[type="checkbox"] {
-        margin-left: 10px;
+    .step-item.completed {
+        background-color: #28a745;
+        color: white;
     }
 </style>
 
-<!-- JavaScript for handling the comment input actions -->
+<!-- JavaScript for handling the steps and comments -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         function cancelComment() {
@@ -207,5 +212,71 @@
         });
 
         document.getElementById('comment-input').addEventListener('focus', showCommentButtons);
+
+        // Handling step completion
+        const stepsContainer = document.querySelector('.steps-container');
+        const stepItems = stepsContainer.querySelectorAll('.step-item');
+
+        stepItems.forEach(stepItem => {
+            stepItem.addEventListener('click', function() {
+                const stepIndex = this.dataset.step;
+                const isCompleted = this.classList.contains('completed');
+
+                if (!isCompleted) {
+                    this.classList.add('completed');
+                    updateProgress(stepIndex);
+                } else {
+                    const prevStep = parseInt(stepIndex) - 1;
+                    const prevStepItem = stepsContainer.querySelector(`.step-item[data-step="${prevStep}"]`);
+                    if (prevStepItem && prevStepItem.classList.contains('completed')) {
+                        this.classList.remove('completed');
+                        updateProgress(stepIndex, true);
+                    }
+                }
+            });
+        });
+
+        function updateProgress(stepIndex, remove = false) {
+            const completedSteps = Array.from(stepsContainer.querySelectorAll('.step-item.completed'))
+                .map(item => item.dataset.step);
+
+            fetch("{{ route('progress.update', $video->id) }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    completed_steps: completedSteps
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success' && completedSteps.length === stepItems.length) {
+                        showCompletionMessage();
+                    }
+                });
+        }
+
+        function showCompletionMessage() {
+            stepsContainer.style.display = 'none';
+            document.getElementById('completion-message').style.display = 'block';
+        }
+
+        document.getElementById('reset-progress').addEventListener('click', function() {
+            fetch("{{ route('progress.reset', $video->id) }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        stepItems.forEach(stepItem => stepItem.classList.remove('completed'));
+                        stepsContainer.style.display = 'flex';
+                        document.getElementById('completion-message').style.display = 'none';
+                    }
+                });
+        });
     });
 </script>

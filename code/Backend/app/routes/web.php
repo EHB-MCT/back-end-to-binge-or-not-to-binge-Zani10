@@ -24,6 +24,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
 
+    Route::post('progress/reset/{video}', [App\Http\Controllers\ProgressController::class, 'reset'])->name('progress.reset');
     Route::post('progress/{video}', [ProgressController::class, 'update'])->name('progress.update');
 
     Route::post('comments', [CommentController::class, 'store'])->name('comments.store');

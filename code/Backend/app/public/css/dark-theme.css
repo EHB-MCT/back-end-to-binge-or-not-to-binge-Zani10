@@ -1,0 +1,18 @@
+body {
+    background-color: #222831;
+    color: #f8f9fa;
+}
+
+.navbar, .footer {
+    background-color: #1d222a;
+
+}
+
+.navbar .navbar-brand, .navbar .nav-link, .footer a {
+    color: white !important;
+}
+
+.card {
+    background-color: #1d222a;
+    color: #f8f9fa;
+}

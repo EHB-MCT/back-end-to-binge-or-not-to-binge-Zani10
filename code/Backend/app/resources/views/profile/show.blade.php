@@ -78,7 +78,7 @@
 
     .card-img-top {
         width: 100%;
-        height: auto;
+        height: 125px;
         object-fit: cover;
     }
 

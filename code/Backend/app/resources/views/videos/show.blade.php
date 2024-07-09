@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8">
                 <h1>{{ $video->title }}</h1>
-                <p>{{ $video->description }}</p>
+                <p>By <a href="{{ route('profile.show', $video->user) }}">{{ $video->user->name }}</a></p>
                 <div class="embed-responsive embed-responsive-16by9 mb-4">
                     <iframe class="embed-responsive-item" src="{{ $video->url }}" allowfullscreen></iframe>
                 </div>

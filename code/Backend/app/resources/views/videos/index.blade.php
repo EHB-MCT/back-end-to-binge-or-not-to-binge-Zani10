@@ -2,13 +2,11 @@
 
 @section('content')
     <div class="container">
-        <h1>DIY Videos</h1>
-
         <!-- Search bar and category filter -->
         <form action="{{ route('videos.index') }}" method="GET" class="mb-4">
             <div class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="Search for videos..." value="{{ request()->query('search') }}">
-                <select name="category_id" class="form-control ml-2">
+                <input type="text" name="search" class="form-control" placeholder="Search for videos..." value="{{ request()->query('search') }}" style="max-width: 400px;">
+                <select name="category_id" class="form-control ml-2" style="max-width: 200px;">
                     <option value="">Select Category</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ request()->query('category_id') == $category->id ? 'selected' : '' }}>
@@ -63,4 +61,23 @@
     .rounded-circle {
         border-radius: 50%;
     }
+
+    .input-group {
+        justify-content: center;
+    }
+
+    .input-group input, .input-group select, .input-group .input-group-append button {
+        border-radius: 20px;
+    }
+
+    .input-group .input-group-append button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .input-group .input-group-prepend .input-group-text {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
 </style>

@@ -16,3 +16,15 @@ body {
     background-color: #1d222a;
     color: #f8f9fa;
 }
+
+.step-item {
+    color: black;
+}
+
+.list-group-item {
+    background-color: #1d222a;
+}
+
+.list-group-item {
+    color: white;
+}

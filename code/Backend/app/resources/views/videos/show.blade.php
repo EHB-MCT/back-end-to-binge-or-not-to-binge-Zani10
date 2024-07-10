@@ -24,7 +24,13 @@
                 <h4>Steps</h4>
                 <div class="steps-container d-flex flex-wrap">
                     @foreach ($video->steps as $index => $step)
-                        <div class="step-item {{ in_array($index, json_decode($progress->completed_steps ?? '[]', true)) ? 'completed' : '' }}" data-step="{{ $index }}">
+                        @php
+                            $completedSteps = json_decode($progress->completed_steps ?? '[]', true) ?? [];
+                            if (!is_array($completedSteps)) {
+                                $completedSteps = [];
+                            }
+                        @endphp
+                        <div class="step-item {{ in_array($index, $completedSteps) ? 'completed' : '' }}" data-step="{{ $index }}">
                             <span>{{ $step }}</span>
                         </div>
                     @endforeach

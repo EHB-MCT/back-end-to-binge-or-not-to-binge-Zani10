@@ -43,6 +43,15 @@
             display: flex;
             align-items: center;
         }
+
+        .navbar-toggler {
+            color:  #1a202c;
+        }
+
+        #theme-switcher {
+        background-color: #1a202c;
+            border: thin solid rgba(255, 255, 255, 0.15);
+        }
     </style>
 </head>
 <body>
@@ -114,15 +123,21 @@
         @yield('content')
     </main>
 
-    <footer class="footer text-center">
-        <div class="container">
-            <p class="mb-0">© 2024 Makeflix. All rights reserved.</p>
-            <p>
-                <a href="{{ url('/') }}">Home</a> |
-                <a href="{{ route('profile.show', Auth::user()->id) }}">Profile</a>
-            </p>
-        </div>
-    </footer>
+    @if (!in_array(Route::currentRouteName(), ['login', 'register']))
+        <footer class="footer text-center">
+            <div class="container">
+                <p class="mb-0">© 2024 Makeflix. All rights reserved.</p>
+                <p>
+                    <a href="{{ url('/') }}">Home</a> |
+                    @auth
+                        <a href="{{ route('profile.show', Auth::user()->id) }}">Profile</a>
+                    @else
+                        <a href="{{ route('login') }}">Login</a>
+                    @endauth
+                </p>
+            </div>
+        </footer>
+    @endif
 </div>
 
 <script>

@@ -1,0 +1,49 @@
+/* Custom styles for login and register pages */
+.login-register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f9;
+}
+
+.login-register-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.login-register-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-register-footer {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.login-register-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-register-footer a:hover {
+    text-decoration: underline;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.btn-primary {
+    width: 100%;
+    background-color: #343a40;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+}

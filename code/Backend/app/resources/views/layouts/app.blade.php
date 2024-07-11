@@ -7,6 +7,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/light-theme.css') }}" id="theme-style">
+    <link rel="stylesheet" href="{{ asset('css/login-register.css') }}">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -30,7 +31,6 @@
         }
 
         .footer {
-
             color: #f8f9fa;
             padding: 20px 0;
         }
@@ -49,7 +49,7 @@
         }
 
         #theme-switcher {
-        background-color: #1a202c;
+            background-color: #1a202c;
             border: thin solid rgba(255, 255, 255, 0.15);
         }
     </style>
@@ -123,7 +123,7 @@
         @yield('content')
     </main>
 
-    @if (!in_array(Route::currentRouteName(), ['login', 'register']))
+    @if (!in_array(request()->route()->getName(), ['login', 'register']))
         <footer class="footer text-center">
             <div class="container">
                 <p class="mb-0">© 2024 Makeflix. All rights reserved.</p>

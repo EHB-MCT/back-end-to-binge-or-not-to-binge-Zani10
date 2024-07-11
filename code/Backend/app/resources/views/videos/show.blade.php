@@ -136,6 +136,14 @@
         display: flex;
         justify-content: flex-end;
     }
+
+    #submit-comment {
+        width: auto; /* Set width to auto to fit content */
+        padding: 10px 20px; /* Adjust padding for a balanced look */
+        font-size: 16px; /* Adjust font size if needed */
+        border-radius: 5px; /* Add some rounding to the corners */
+    }
+
     .btn {
         margin-right: 5px;
     }
